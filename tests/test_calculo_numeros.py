@@ -31,18 +31,33 @@ class TestCalculoNumeros(unittest.TestCase):
         numero = ingrese_numero()
         self.assertEqual(numero, 0)
 
+
 #tests para numeros negativos
 
-    @patch( 
-        'builtins.input',
-        return_value='-100'
-    )
+
+    @patch('builtins.input',return_value='-100')
     def test_ingreso_negativo(self, patch_input):
+        with self.assertRaises(NumeroDebeSerPositivo):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='-1')
+    def test_numero_negativo_minimo(self, mock_input):
+        with self.assertRaises(NumeroDebeSerPositivo):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='-999')
+    def test_numero_negativo_grande(self, mock_input):
+        with self.assertRaises(NumeroDebeSerPositivo):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='  -5  ')
+    def test_numero_negativo_con_espacios(self, mock_input):
         with self.assertRaises(NumeroDebeSerPositivo):
             ingrese_numero()
 
 
 #tests para texto no numérico
+
 
     @patch(  
         'builtins.input',
