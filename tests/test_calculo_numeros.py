@@ -59,11 +59,28 @@ class TestCalculoNumeros(unittest.TestCase):
 #tests para texto no numérico
 
 
-    @patch(  
-        'builtins.input',
-        return_value='AAA'
-    )
+    @patch('builtins.input',return_value='AAA')
     def test_ingreso_letras(self, patch_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='hola')
+    def test_texto_simple(self, mock_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='123abc')
+    def test_texto_mezclado_con_numeros(self, mock_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='!!@@##')
+    def test_simbolos(self, mock_input):
+        with self.assertRaises(ValueError):
+            ingrese_numero()
+
+    @patch('builtins.input', return_value='   ')
+    def test_espacios_vacios(self, mock_input):
         with self.assertRaises(ValueError):
             ingrese_numero()
 
