@@ -1,4 +1,4 @@
-from exceptions import ingrese_numero
+from exceptions import ingrese_numero, NumeroDebeSerPositivo, SalirDelPrograma
 
 def main():
     """
@@ -12,9 +12,12 @@ def main():
             print(f"Error: {e}")
         except NumeroDebeSerPositivo as e:
             print(f"Error: {e}")
+        except SalirDelPrograma:
+            print("Saliendo del programa...")
+            break
         except KeyboardInterrupt:
             print("\nPrograma finalizado.")
             break
 
 if __name__ == "__main__":
-    main() 
+    main()
