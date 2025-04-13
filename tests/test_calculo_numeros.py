@@ -7,15 +7,33 @@ from unittest.mock import patch
 
 class TestCalculoNumeros(unittest.TestCase):
 
-    @patch(  # este patch controla lo que hace el input
-        'builtins.input',
-        return_value='100'
-    )
+
+#tests para numeros positivos
+
+
+    @patch(  'builtins.input',return_value='100')
     def test_ingreso_feliz(self, patch_input):
         numero = ingrese_numero()
         self.assertEqual(numero, 100)
 
-    @patch(  # este patch controla lo que hace el input
+    @patch('builtins.input', return_value='1')
+    def test_numero_positivo_minimo(self, mock_input):
+        numero = ingrese_numero()
+        self.assertEqual(numero, 1)
+
+    @patch('builtins.input', return_value='999')
+    def test_numero_positivo_grande(self, mock_input):
+        numero = ingrese_numero()
+        self.assertEqual(numero, 999)
+
+    @patch('builtins.input', return_value='0')
+    def test_cero_es_valido(self, mock_input):
+        numero = ingrese_numero()
+        self.assertEqual(numero, 0)
+
+#tests para numeros negativos
+
+    @patch( 
         'builtins.input',
         return_value='-100'
     )
@@ -23,7 +41,10 @@ class TestCalculoNumeros(unittest.TestCase):
         with self.assertRaises(NumeroDebeSerPositivo):
             ingrese_numero()
 
-    @patch(  # este patch controla lo que hace el input
+
+#tests para texto no numérico
+
+    @patch(  
         'builtins.input',
         return_value='AAA'
     )
